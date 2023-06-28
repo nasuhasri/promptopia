@@ -1,8 +1,13 @@
-import React from 'react'
+"use client" // using the browser capability
 
-const Provider = () => {
+import { SessionProvider } from 'next-auth/react'
+
+// Higher order component - wrap other component with it
+const Provider = ({ children, session }) => {
   return (
-    <div>Provider</div>
+    <SessionProvider session={session}>
+      {children}
+    </SessionProvider>
   )
 }
 
