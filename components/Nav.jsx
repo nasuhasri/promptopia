@@ -6,20 +6,22 @@ import { useState, useEffect } from 'react'; // to use this, we must change this
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  // const isUserLoggedIn = true;
+
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropDown, setToggleDropDown] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setUpProviders = async () => {
       const response = await getProviders();
 
       setProviders(response);
     }
 
     // allow us to sign in using google and next auth
-    setProviders(); // call setProviders here
+    setUpProviders(); // call setProviders here
   }, []) // empty array - runs at start only
 
   return (
@@ -33,7 +35,7 @@ const Nav = () => {
       {/* flex - visible but usually it is hidden */}
       {/* kalau kat mobile view, button create post ni akan hidden dan appear kat large screen je */}
       <div className='sm:flex hidden'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex gap-3 md:gap-5'>
             <Link href="/create-prompt" className='black_btn'>Create Post</Link>
 
@@ -56,7 +58,7 @@ const Nav = () => {
 
       {/* Mobile Navigation */}
       <div className='sm:hidden flex relative'>
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className='flex'>
             <Image src='/assets/images/logo.svg' width={37} height={37} className='rounded-full' alt='profile' onClick={() => setToggleDropDown((prev) => !prev)} />
             {/* when set something, it is not recommended to use setToggleDropDown(!toggleDropDown) bcs it will lead to unexpected behaviour */}
