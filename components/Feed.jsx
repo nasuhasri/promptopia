@@ -24,7 +24,7 @@ const Feed = () => {
 
   // handle input search
   const handleSearchChange = (e) => {
-    setSearchText(e.target.value)
+    // setSearchText(e.target.value)
 
     const result = searchFilter();
 
@@ -34,11 +34,10 @@ const Feed = () => {
   const searchFilter = () => {
     return posts.filter(
       (post) => 
-        post.tag.includes(searchText) ||
-        post.prompt.includes(searchText) ||
-        post.creator.username.includes(searchText)
+        post.tag.toLowerCase().includes(searchText.toLowerCase()) ||
+        post.prompt.toLowerCase().includes(searchText.toLowerCase()) ||
+        post.creator.username.toLowerCase().includes(searchText.toLowerCase())
     )
-
   }
 
   // load at the start of the page as soon as page loads 
@@ -61,8 +60,10 @@ const Feed = () => {
           type="text"
           placeholder="Search for a tag or a username"
           value={searchText}
-          onChange={handleSearchChange}
-          onKeyUp={searchFilter}
+          // onChange={handleSearchChange}
+          // onKeyUp={searchFilter}
+          onChange={(e) => setSearchText(e.target.value)} // get input text from user
+          onKeyUp={handleSearchChange} // every time user key in character, we filter result
           required
           className="search_input peer"
         />
