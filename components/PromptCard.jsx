@@ -18,11 +18,19 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     setTimeout(() => setCopied(""), 3000); // reset the state by 3000 ms @ 3 secs
   }
 
+  // to differentiate the logged in user
+  var link_page = '';
+  if (session?.user.id === post.creator._id){
+    link_page = `/profile`
+  } else {
+    link_page = `/profile/${post.creator.username}`
+  }
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
-          <Link href={`/${post.creator.username}`}>
+          <Link href={link_page}>
             <Image
               src={post.creator.image}
               alt="user_image"
@@ -33,7 +41,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           </Link>
 
           <div className="flex flex-col">
-            <Link href={`/${post.creator.username}`}>
+            <Link href={link_page}>
               <h3 className="font-satoshi font-semibold text-gray-900">
                 {post.creator.username}
               </h3>
