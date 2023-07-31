@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react"; // to know whether we are logged in
 import { useRouter } from "next/navigation"; // to route back to home
 
-import Profile from "@components/profile";
+import Profile from "@components/Profile";
 
 const MyProfile = () => {
   const { data: session } = useSession();
