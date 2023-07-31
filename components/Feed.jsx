@@ -26,18 +26,29 @@ const Feed = () => {
   const handleSearchChange = (e) => {
     // setSearchText(e.target.value)
 
-    const result = searchFilter();
+    const result = searchFilter(searchText);
 
     setSearchResult(result);
   }
 
-  const searchFilter = () => {
+  const searchFilter = (searchText) => {
     return posts.filter(
       (post) => 
         post.tag.toLowerCase().includes(searchText.toLowerCase()) ||
         post.prompt.toLowerCase().includes(searchText.toLowerCase()) ||
         post.creator.username.toLowerCase().includes(searchText.toLowerCase())
     )
+  }
+
+  // retrieve data from child component (PromptCard)
+  const handleTagClick = (postTag) => {
+    var postTag = postTag.slice(1);
+
+    setSearchText(postTag);
+
+    const result = searchFilter(postTag);
+
+    setSearchResult(result);
   }
 
   // load at the start of the page as soon as page loads 
@@ -72,12 +83,12 @@ const Feed = () => {
       {searchText ? (
         <PromptCardList
           data={searchResult}
-          handleTagClick={() => {}}
+          handleTagClick={handleTagClick}
         />
       ) : (
         <PromptCardList
           data={posts}
-          handleTagClick={() => {}} 
+          handleTagClick={handleTagClick} 
         />
       )}
       

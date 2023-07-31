@@ -6,7 +6,6 @@ export const GET = async (request, { params }) => {
     await connectToDB();
 
     const user = await User.findOne({ username: params.username });
-    // const id = user ? user._id : null;
 
     return new Response(JSON.stringify(user), { status: 200 });
   } catch (error) {
