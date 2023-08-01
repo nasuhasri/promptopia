@@ -3,13 +3,14 @@ import Nav from '@components/Nav'
 import Provider from '@components/Provider'
 
 export const metadata = {
-  title: 'Promptopia',
+  title: 'Promptopia - Nasuha Asri',
   description: 'Dicover & Share AI Prompts'
 }
 
 const RootLayout = ({ children }) => {
   return (
     <html lang='en'>
+      <link rel="icon" href="/assets/images/logo.svg" sizes="any" />
       <body>
         <Provider>
           <div className='main'>
