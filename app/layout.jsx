@@ -11,7 +11,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang='en'>
       <link rel="icon" href="/assets/images/logo.svg" sizes="any" />
-      <body>
+      <body suppressHydrationWarning={true}>
         <Provider>
           <div className='main'>
             <div className='gradient' />
