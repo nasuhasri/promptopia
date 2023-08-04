@@ -62,7 +62,7 @@ const Feed = () => {
     }
 
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   return (
     <section className="feed">
