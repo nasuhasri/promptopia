@@ -51,18 +51,18 @@ const Feed = () => {
     setSearchResult(result);
   }
 
+  // fetch data from backend
+  const fetchPosts = async () => {
+    const response = await fetch('/api/prompt');
+    const data = await response.json();
+
+    setPosts(data);
+  }
+
   // load at the start of the page as soon as page loads 
   useEffect(() => {
-    // fetch data from backend
-    const fetchPosts = async () => {
-      const response = await fetch('/api/prompt');
-      const data = await response.json();
-
-      setPosts(data);
-    }
-
     fetchPosts();
-  }, [posts]);
+  }, []);
 
   return (
     <section className="feed">
