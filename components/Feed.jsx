@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
-import useSWR from 'swr';
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -52,15 +51,11 @@ const Feed = () => {
     setSearchResult(result);
   }
 
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
-
   // fetch data from backend
   const fetchPosts = async () => {
-    const { data, error, isLoading } = useSWR('/api/prompt', fetcher);
+    const response = await fetch('/api/prompt');
 
-    // const response = await fetch('/api/prompt');
-
-    // const data = await response.json();
+    const data = await response.json();
 
     setPosts(data);
   }
