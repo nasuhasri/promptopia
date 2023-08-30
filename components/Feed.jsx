@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
+import useSWR from 'swr';
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -51,18 +52,28 @@ const Feed = () => {
     setSearchResult(result);
   }
 
-  // fetch data from backend
-  const fetchPosts = async () => {
-    const response = await fetch('/api/prompt');
-    const data = await response.json();
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error, isLoading } = useSWR('/api/prompt', fetcher); // handles fetching the data and updating the data value
 
-    setPosts(data);
-  }
-
-  // load at the start of the page as soon as page loads 
+  // set the posts state based on the data value from useSWR, and only updating posts when data changes
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (data) {
+      setPosts(data);
+    }
+  }, [data]);
+
+  // fetch data from backend
+  // const fetchPosts = async () => {
+  //   const response = await fetch('/api/prompt');
+  //   const data = await response.json();
+
+  //   setPosts(data);
+  // }
+
+  // // load at the start of the page as soon as page loads 
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   return (
     <section className="feed">
