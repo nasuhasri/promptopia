@@ -52,28 +52,32 @@ const Feed = () => {
     setSearchResult(result);
   }
 
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error, isLoading } = useSWR('/api/prompt', fetcher); // handles fetching the data and updating the data value
+  // const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  // const { data, error, isLoading } = useSWR('/api/prompt', fetcher); // handles fetching the data and updating the data value
 
-  // set the posts state based on the data value from useSWR, and only updating posts when data changes
-  useEffect(() => {
-    if (data) {
-      setPosts(data);
-    }
-  }, [data]);
+  // // set the posts state based on the data value from useSWR, and only updating posts when data changes
+  // useEffect(() => {
+  //   if (data) {
+  //     setPosts(data);
+  //   }
+  // }, [data]);
 
   // fetch data from backend
-  // const fetchPosts = async () => {
-  //   const response = await fetch('/api/prompt');
-  //   const data = await response.json();
+  const fetchPosts = async () => {
+    const response = await fetch('/api/prompt', {
+      next: { revalidate: 300 }
+    });
+    const data = await response.json();
 
-  //   setPosts(data);
-  // }
+    console.log(data);
 
-  // // load at the start of the page as soon as page loads 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+    setPosts(data);
+  }
+
+  // load at the start of the page as soon as page loads 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <section className="feed">
