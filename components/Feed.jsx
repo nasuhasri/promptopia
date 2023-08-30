@@ -54,9 +54,7 @@ const Feed = () => {
 
   // fetch data from backend
   const fetchPosts = async () => {
-    const response = await fetch('/api/prompt', {
-      next: { revalidate: 60}
-    });
+    const response = await fetch('/api/prompt');
 
     const data = await response.json();
 
