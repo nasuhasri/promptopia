@@ -76,7 +76,7 @@ const Feed = () => {
   // load at the start of the page as soon as page loads 
   useEffect(() => {
     fetchPosts();
-  }, [posts]);
+  }, []);
 
   return (
     <section className="feed">
