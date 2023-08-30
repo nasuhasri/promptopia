@@ -65,11 +65,10 @@ const Feed = () => {
   // fetch data from backend
   const fetchPosts = async () => {
     const response = await fetch('/api/prompt', {
-      next: { revalidate: 300 }
+      next: { revalidate: 60 }
     });
+    
     const data = await response.json();
-
-    console.log(data);
 
     setPosts(data);
   }
