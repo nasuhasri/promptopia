@@ -29,14 +29,19 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB();
 
-    const existingPrompt = await Prompt.findById(params.id);
+    // const existingPrompt = await Prompt.findById(params.id);
 
-    if (!existingPrompt) return new Response("Prompt not found!", { status: 404 })
+    // if (!existingPrompt) return new Response("Prompt not found!", { status: 404 })
 
-    existingPrompt.prompt = prompt;
-    existingPrompt.tag = tag;
+    // existingPrompt.prompt = prompt;
+    // existingPrompt.tag = tag;
 
-    await existingPrompt.save();
+    // await existingPrompt.save();
+
+    const filter = { id: params.id };
+    const update = { prompt: prompt, tag: tag }
+
+    const existingPrompt = await Prompt.findOneAndUpdate(filter, update, { new: true })
 
     return new Response(JSON.stringify(existingPrompt), { status: 200 })
   } catch (error) {
