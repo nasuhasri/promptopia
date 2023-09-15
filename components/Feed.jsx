@@ -100,7 +100,7 @@ const Feed = () => {
         />
       ) : (
         <PromptCardList
-          data={postsData}
+          data={posts}
           handleTagClick={handleTagClick} 
         />
       )}
