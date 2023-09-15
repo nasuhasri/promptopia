@@ -18,10 +18,14 @@ const PromptCardList = ({ data, handleTagClick }) => {
   )
 }
 
+const fetcher = async (url) => await fetch(url).then((res) => res.json());
+
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [posts, setPosts] = useState([]); // set to empty array
+
+  // const { data: promptData, error: promptError, isLoading } = useSWR('http://localhost:3000/api/prompt', fetcher);
 
   // handle input search
   const handleSearchChange = (e) => {
@@ -52,46 +56,25 @@ const Feed = () => {
     setSearchResult(result);
   }
 
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  // const { data, error, isLoading } = useSWR('/api/prompt', fetcher); // handles fetching the data and updating the data value
-
-  // // set the posts state based on the data value from useSWR, and only updating posts when data changes
-  // useEffect(() => {
-  //   if (data) {
-  //     setPosts(data);
-  //   }
-  // }, [data]);
-
-  const { data, error } = useSWR('/api/prompt', fetcher, {
-    revalidateOnFocus: true,  // This enables automatic revalidation when the window/tab regains focus
-    refreshInterval: 60000    // This sets the refresh interval to 60 seconds (adjust as needed)
-  });
-
-  useEffect(() => {
-    if (data) {
-      setPosts(data);
-    }
-  }, [data]);
-
   // fetch data from backend
-  // const fetchPosts = async () => {
-  //   try {
-  //     const response = await fetch('/api/prompt', {
-  //       next: { revalidate: 60 }
-  //     });
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('/api/prompt', {
+        next: { revalidate: 60 }
+      });
       
-  //     const data = await response.json();
+      const data = await response.json();
   
-  //     setPosts(data);      
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // }
+      setPosts(data);      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
-  // // load at the start of the page as soon as page loads 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
+  // load at the start of the page as soon as page loads 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <section className="feed">
