@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import useSWR from 'swr';
+import { data } from "autoprefixer";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -25,7 +26,7 @@ const Feed = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [posts, setPosts] = useState([]); // set to empty array
 
-  // const { data: promptData, error: promptError, isLoading } = useSWR('http://localhost:3000/api/prompt', fetcher);
+  // const { data: postsData, error: promptError, isLoading } = useSWR('http://localhost:3000/api/prompt', fetcher);
 
   // handle input search
   const handleSearchChange = (e) => {
@@ -60,7 +61,7 @@ const Feed = () => {
   const fetchPosts = async () => {
     try {
       const response = await fetch('/api/prompt', {
-        next: { revalidate: 60 }
+        cache: 'no-cache'
       });
       
       const data = await response.json();
@@ -99,7 +100,7 @@ const Feed = () => {
         />
       ) : (
         <PromptCardList
-          data={posts}
+          data={postsData}
           handleTagClick={handleTagClick} 
         />
       )}
