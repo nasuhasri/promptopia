@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import PromptCard from "./PromptCard";
 import useSWR from 'swr';
-import { data } from "autoprefixer";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -93,17 +92,10 @@ const Feed = () => {
         />
       </form>
 
-      {searchText ? (
-        <PromptCardList
-          data={searchResult}
-          handleTagClick={handleTagClick}
-        />
-      ) : (
-        <PromptCardList
-          data={posts}
-          handleTagClick={handleTagClick} 
-        />
-      )}
+      <PromptCardList
+        data={searchText ? searchResult : posts}
+        handleTagClick={handleTagClick}
+      />
       
     </section>
   )

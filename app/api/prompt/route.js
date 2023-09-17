@@ -27,7 +27,7 @@ export const GET = async (request) => {
       headers: cacheHeaders,
     });
   } catch (error) {
-    return new Response('Failed to fetch all prompts!', {
+    return new Response(error, {
       status: 500,
     });
   }
