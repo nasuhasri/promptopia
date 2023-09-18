@@ -1,11 +1,12 @@
 import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
+import User from "@models/user";
 
 export const GET = async (request) => {
   try {
     await connectToDB();
 
-    const prompts = await Prompt.find({}).populate('creator');
+    const prompts = await Prompt.find({}).populate({ path: 'creator', model: User });
 
     // Define caching headers
     const cacheHeaders = {
