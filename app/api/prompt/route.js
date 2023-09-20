@@ -6,7 +6,12 @@ export const GET = async (request) => {
   try {
     await connectToDB();
 
-    const prompts = await Prompt.find({}).populate({ path: 'creator', model: User });
+    // reference in using populate: https://stackoverflow.com/questions/33072212/mongoose-error-schema-hasnt-been-registered-for-model-when-populate
+    
+    const prompts = await Prompt.find({}).populate({
+      path: 'creator',
+      model: User,
+    });
 
     // Define caching headers
     const cacheHeaders = {
